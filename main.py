@@ -302,7 +302,7 @@ class HospitalApp(QMainWindow):
         btn.setCursor(Qt.CursorShape.PointingHandCursor)
         btn.clicked.connect(self._submit_patient)
         layout.addSpacing(8)
-        layout.addWidget(btn, alignment=Qt.AlignmentFlag.AlignLeft)
+        layout.addWidget(btn)
         layout.addStretch()
         self.stack.addWidget(page)
 
@@ -347,7 +347,7 @@ class HospitalApp(QMainWindow):
         btn.setCursor(Qt.CursorShape.PointingHandCursor)
         btn.clicked.connect(self._submit_doctor)
         layout.addSpacing(8)
-        layout.addWidget(btn, alignment=Qt.AlignmentFlag.AlignLeft)
+        layout.addWidget(btn)
         layout.addStretch()
         self.stack.addWidget(page)
 
@@ -388,7 +388,7 @@ class HospitalApp(QMainWindow):
         btn.setCursor(Qt.CursorShape.PointingHandCursor)
         btn.clicked.connect(self._submit_appointment)
         layout.addSpacing(8)
-        layout.addWidget(btn, alignment=Qt.AlignmentFlag.AlignLeft)
+        layout.addWidget(btn)
         layout.addStretch()
         self.stack.addWidget(page)
 
