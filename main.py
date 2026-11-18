@@ -249,7 +249,8 @@ class HospitalApp(QMainWindow):
 
         for r, row in enumerate(rows):
             for c, val in enumerate(row):
-                self._table.setItem(r, c, QTableWidgetItem(str(val)))
+                display_val = "-" if val is None else str(val)
+                self._table.setItem(r, c, QTableWidgetItem(display_val))
 
     # == form builder helper ==
 
@@ -281,6 +282,9 @@ class HospitalApp(QMainWindow):
             elif key == "filo":
                 widget = QComboBox()
                 widget.addItems(["Άνδρας", "Γυναίκα"])
+            elif key == "blood":
+                widget = QComboBox()
+                widget.addItems(["-", "A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"])
             else:
                 widget = QLineEdit()
 
@@ -321,6 +325,9 @@ class HospitalApp(QMainWindow):
 
     def _submit_patient(self):
         e = self._pat_entries
+        blood_val = e["blood"].currentText()
+        tipos_aimotos = None if blood_val == "-" else blood_val
+
         required = ["amka", "onoma", "epitheto", "phone"]
         for key in required:
             if not e[key].text().strip():
@@ -333,7 +340,7 @@ class HospitalApp(QMainWindow):
                 e["epitheto"].text().strip(),
                 e["dob"].date().toString("dd-MM-yyyy"),
                 e["filo"].currentText(),
-                e["blood"].text().strip(),
+                tipos_aimotos,
                 e["phone"].text().strip(),
                 e["email"].text().strip(),
                 e["address"].text().strip(), 1
