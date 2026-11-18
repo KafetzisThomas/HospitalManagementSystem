@@ -18,7 +18,7 @@ QMainWindow {
     border: none;
     text-align: left;
     padding: 12px 22px;
-    font-size: 13px;
+    font-size: 10pt;
 }
 
 #sidebar QPushButton:hover {
@@ -35,23 +35,23 @@ QMainWindow {
 }
 
 #pageTitle {
-    font-size: 20px;
+    font-size: 15pt;
     font-weight: bold;
-    color: #2C3E50;
+    color: #000000;
 }
 
 #pageSubtitle {
-    font-size: 11px;
+    font-size: 9pt;
     color: #7F8C8D;
 }
 
 #tabBar QPushButton {
     background: #F0F4F8;
-    color: #2C3E50;
+    color: #000000;
     border: none;
     padding: 7px 18px;
     border-radius: 4px;
-    font-size: 12px;
+    font-size: 9pt;
 }
 
 #tabBar QPushButton:checked {
@@ -66,21 +66,34 @@ QMainWindow {
 }
 
 #card QLabel {
-    color: #2C3E50;
-    font-size: 12px;
+    color: #000000;
+    font-size: 9pt;
 }
 
-QLineEdit, QDateEdit {
+QLineEdit, QDateEdit, QComboBox {
     background: #FFFFFF;
     border: 1px solid #D5DDE5;
     border-radius: 4px;
     padding: 7px 10px;
-    font-size: 12px;
-    color: #2C3E50;
+    font-size: 9pt;
+    color: #000000;
 }
 
-QLineEdit:focus, QDateEdit:focus {
+QLineEdit:focus, QDateEdit:focus, QComboBox:focus {
     border: 1px solid #2980B9;
+}
+
+QComboBox::drop-down {
+    border: none;
+    padding-right: 8px;
+}
+
+QComboBox QAbstractItemView {
+    background: #FFFFFF;
+    border: 1px solid #D5DDE5;
+    selection-background-color: #2980B9;
+    selection-color: #FFFFFF;
+    color: #000000;
 }
 
 #submitBtn {
@@ -89,7 +102,7 @@ QLineEdit:focus, QDateEdit:focus {
     border: none;
     border-radius: 5px;
     padding: 10px 30px;
-    font-size: 13px;
+    font-size: 10pt;
     font-weight: bold;
 }
 
@@ -106,8 +119,8 @@ QTableWidget {
     border: 1px solid #D5DDE5;
     border-radius: 6px;
     gridline-color: #EBF0F5;
-    font-size: 12px;
-    color: #2C3E50;
+    font-size: 9pt;
+    color: #000000;
 }
 
 QTableWidget::item:selected {
@@ -121,5 +134,5 @@ QHeaderView::section {
     padding: 6px;
     border: none;
     font-weight: bold;
-    font-size: 12px;
+    font-size: 9pt;
 }

@@ -21,6 +21,7 @@ from PySide6.QtCore import QDate, Qt
 from PySide6.QtGui import QFont, QIcon
 from PySide6.QtWidgets import (
     QApplication,
+    QComboBox,
     QDateEdit,
     QFormLayout,
     QHBoxLayout,
@@ -277,6 +278,9 @@ class HospitalApp(QMainWindow):
                 widget.setDisplayFormat("dd-MM-yyyy")
                 widget.setDate(QDate(2000, 1, 1))
                 widget.setMaximumDate(QDate.currentDate())
+            elif key == "filo":
+                widget = QComboBox()
+                widget.addItems(["Άνδρας", "Γυναίκα"])
             else:
                 widget = QLineEdit()
 
@@ -317,7 +321,7 @@ class HospitalApp(QMainWindow):
 
     def _submit_patient(self):
         e = self._pat_entries
-        required = ["amka", "onoma", "epitheto", "filo", "phone"]
+        required = ["amka", "onoma", "epitheto", "phone"]
         for key in required:
             if not e[key].text().strip():
                 QMessageBox.warning(self, "Missing field", "Παρακαλώ συμπληρώστε όλα τα υποχρεωτικά (*) πεδία.")
@@ -328,7 +332,7 @@ class HospitalApp(QMainWindow):
                 e["onoma"].text().strip(),
                 e["epitheto"].text().strip(),
                 e["dob"].date().toString("dd-MM-yyyy"),
-                e["filo"].text().strip(),
+                e["filo"].currentText(),
                 e["blood"].text().strip(),
                 e["phone"].text().strip(),
                 e["email"].text().strip(),
@@ -340,6 +344,8 @@ class HospitalApp(QMainWindow):
             for entry in e.values():
                 if isinstance(entry, QDateEdit):
                     entry.setDate(QDate(2000, 1, 1))
+                elif isinstance(entry, QComboBox):
+                    entry.setCurrentIndex(0)
                 else:
                     entry.clear()
         except sqlite3.IntegrityError:
@@ -427,11 +433,11 @@ class HospitalApp(QMainWindow):
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     app.setWindowIcon(QIcon("logo.png"))
+    app.setFont(QFont("Segoe UI", 10))
 
     with open("styles.qss", "r", encoding="utf-8") as file:
         app.setStyleSheet(file.read())
 
-    app.setFont(QFont("Segoe UI", 10))
     window = HospitalApp()
     window.show()
     sys.exit(app.exec())
