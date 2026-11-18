@@ -70,7 +70,7 @@ QMainWindow {
     font-size: 12px;
 }
 
-QLineEdit {
+QLineEdit, QDateEdit {
     background: #FFFFFF;
     border: 1px solid #D5DDE5;
     border-radius: 4px;
@@ -79,7 +79,7 @@ QLineEdit {
     color: #2C3E50;
 }
 
-QLineEdit:focus {
+QLineEdit:focus, QDateEdit:focus {
     border: 1px solid #2980B9;
 }
 

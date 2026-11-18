@@ -17,10 +17,11 @@ import datetime
 import sqlite3
 import sys
 
-from PySide6.QtCore import Qt
+from PySide6.QtCore import QDate, Qt
 from PySide6.QtGui import QFont, QIcon
 from PySide6.QtWidgets import (
     QApplication,
+    QDateEdit,
     QFormLayout,
     QHBoxLayout,
     QHeaderView,
@@ -270,10 +271,18 @@ class HospitalApp(QMainWindow):
 
         entries: dict[str, QLineEdit] = {}
         for key, label_text in fields:
-            line = QLineEdit()
-            line.setMinimumHeight(32)
-            form.addRow(label_text, line)
-            entries[key] = line
+            if key == "dob":
+                widget = QDateEdit()
+                widget.setCalendarPopup(True)
+                widget.setDisplayFormat("dd-MM-yyyy")
+                widget.setDate(QDate(2000, 1, 1))
+                widget.setMaximumDate(QDate.currentDate())
+            else:
+                widget = QLineEdit()
+
+            widget.setMinimumHeight(32)
+            form.addRow(label_text, widget)
+            entries[key] = widget
 
         page_layout.addWidget(card)
         return entries
@@ -308,7 +317,7 @@ class HospitalApp(QMainWindow):
 
     def _submit_patient(self):
         e = self._pat_entries
-        required = ["amka", "onoma", "epitheto", "dob", "filo", "phone"]
+        required = ["amka", "onoma", "epitheto", "filo", "phone"]
         for key in required:
             if not e[key].text().strip():
                 QMessageBox.warning(self, "Missing field", "Παρακαλώ συμπληρώστε όλα τα υποχρεωτικά (*) πεδία.")
@@ -318,7 +327,7 @@ class HospitalApp(QMainWindow):
                 e["amka"].text().strip(),
                 e["onoma"].text().strip(),
                 e["epitheto"].text().strip(),
-                e["dob"].text().strip(),
+                e["dob"].date().toString("dd-MM-yyyy"),
                 e["filo"].text().strip(),
                 e["blood"].text().strip(),
                 e["phone"].text().strip(),
@@ -329,7 +338,10 @@ class HospitalApp(QMainWindow):
             QMessageBox.information(self, "Success", "Ο ασθενής προστέθηκε επιτυχώς.")
 
             for entry in e.values():
-                entry.clear()
+                if isinstance(entry, QDateEdit):
+                    entry.setDate(QDate(2000, 1, 1))
+                else:
+                    entry.clear()
         except sqlite3.IntegrityError:
             QMessageBox.critical(self, "Error", "Υπάρχει ήδη ασθενής με αυτό το ΑΜΚΑ.")
 
